@@ -12,21 +12,20 @@ import java.util.List;
 public class BilletController {
 
     private final BilletService billetService;
-    private final BilletRepository billetRepository;
 
     @Autowired
-    public BilletController(BilletService billetService, BilletRepository billetRepository) {
+    public BilletController(BilletService billetService) {
         this.billetService = billetService;
-        this.billetRepository = billetRepository;
     }
 
     @GetMapping
     public List<Billet> getAllEpreuves() {
         return billetService.findAllBillets();
     }
-    @GetMapping("/{id}")
-    public ResponseEntity<Billet> getBilletById(@PathVariable Integer id) {
-        Billet billet = billetRepository.findById(id).orElse(null);
+
+    @GetMapping("/{idBillet}")
+    public ResponseEntity<Billet> findById(@PathVariable Integer idBillet) {
+        Billet billet = billetService.getBilletById(idBillet);
         if (billet != null) {
             return new ResponseEntity<>(billet, HttpStatus.OK);
         }

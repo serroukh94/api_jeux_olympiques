@@ -25,9 +25,9 @@ public class StadeController {
         return stadeService.findAllStades();
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<Stade> findStade(@PathVariable Integer id) {
-        Stade stade = stadeRepository.findById(id).orElse(null);
+    @GetMapping("/{idStade}")
+    public ResponseEntity<Stade> findStade(@PathVariable Integer idStade) {
+        Stade stade = stadeRepository.findById(idStade).orElse(null);
         if (stade != null) {
             return new ResponseEntity<>(stade, HttpStatus.OK);
         }
@@ -39,9 +39,9 @@ public class StadeController {
         return stadeService.saveStade(stade);
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<Stade> updateStade(@PathVariable Integer id, @RequestBody Stade stadeDetails) {
-        Stade stadeAModifier = stadeRepository.findById(id).orElse(null);
+    @PutMapping("/{idStade}")
+    public ResponseEntity<Stade> updateStade(@PathVariable Integer idStade, @RequestBody Stade stadeDetails) {
+        Stade stadeAModifier = stadeRepository.findById(idStade).orElse(null);
         if (stadeAModifier != null) {
             stadeAModifier.setNom(stadeDetails.getNom());
             stadeAModifier.setCapacite(stadeDetails.getCapacite());
@@ -52,12 +52,12 @@ public class StadeController {
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<?> deleteStade(@PathVariable Integer id) {
-        if (!stadeRepository.existsById(id)) {
+    @DeleteMapping("/{idStade}")
+    public ResponseEntity<?> deleteStade(@PathVariable Integer idStade) {
+        if (!stadeRepository.existsById(idStade)) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        stadeRepository.deleteById(id);
+        stadeRepository.deleteById(idStade);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 

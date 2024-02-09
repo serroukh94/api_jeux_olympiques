@@ -25,9 +25,9 @@ public class EpreuveController {
         return epreuveService.findAllEpreuves();
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<Epreuve> getEpreuveById(@PathVariable Integer id) {
-        Epreuve epreuve = epreuveRepository.findById(id).orElse(null);
+    @GetMapping("/{idEpreuve}")
+    public ResponseEntity<Epreuve> getEpreuveById(@PathVariable Integer idEpreuve) {
+        Epreuve epreuve = epreuveRepository.findById(idEpreuve).orElse(null);
         if (epreuve != null) {
             return new ResponseEntity<>(epreuve, HttpStatus.OK);
         }
@@ -40,9 +40,9 @@ public class EpreuveController {
         return epreuveService.saveEpreuve(epreuve);
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<Epreuve> updateEpreuve(@PathVariable Integer id, @RequestBody Epreuve epreuveDetails) {
-        Epreuve epreuveToUpdate = epreuveRepository.findById(id).orElse(null);
+    @PutMapping("/{idEpreuve}")
+    public ResponseEntity<Epreuve> updateEpreuve(@PathVariable Integer idEpreuve, @RequestBody Epreuve epreuveDetails) {
+        Epreuve epreuveToUpdate = epreuveRepository.findById(idEpreuve).orElse(null);
         if (epreuveToUpdate != null) {
             epreuveToUpdate.setNom(epreuveDetails.getNom());
             epreuveToUpdate.setDateHeure(epreuveDetails.getDateHeure());
@@ -52,12 +52,12 @@ public class EpreuveController {
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<?> deleteEpreuve(@PathVariable Integer id) {
-        if (!epreuveRepository.existsById(id)) {
+    @DeleteMapping("/{idEpreuve}")
+    public ResponseEntity<?> deleteEpreuve(@PathVariable Integer idEpreuve) {
+        if (!epreuveRepository.existsById(idEpreuve)) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        epreuveRepository.deleteById(id);
+        epreuveRepository.deleteById(idEpreuve);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 

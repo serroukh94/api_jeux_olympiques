@@ -25,9 +25,9 @@ public class SpectateurController {
         return spectateurService.findAllSpectateurs();
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<Spectateur> findSpectateur(@PathVariable Integer id) {
-        Spectateur spectateur = spectateurRepository.findById(id).orElse(null);
+    @GetMapping("/{idSpectateur}")
+    public ResponseEntity<Spectateur> findSpectateur(@PathVariable Integer idSpectateur) {
+        Spectateur spectateur = spectateurRepository.findById(idSpectateur).orElse(null);
         if(spectateur != null) {
             return new ResponseEntity<>(spectateur, HttpStatus.OK);
         }
@@ -39,9 +39,9 @@ public class SpectateurController {
         return spectateurService.save(spectateur);
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<Spectateur> updateSpectateur(@PathVariable Integer id, @RequestBody Spectateur spectateur) {
-        Spectateur spectateurAModifier = spectateurRepository.findById(id).orElse(null);
+    @PutMapping("/{idSpectateur}")
+    public ResponseEntity<Spectateur> updateSpectateur(@PathVariable Integer idSpectateur, @RequestBody Spectateur spectateur) {
+        Spectateur spectateurAModifier = spectateurRepository.findById(idSpectateur).orElse(null);
         if (spectateurAModifier != null) {
             spectateurAModifier.setNom(spectateur.getNom());
             spectateurAModifier.setEmail(spectateur.getEmail());
@@ -51,12 +51,12 @@ public class SpectateurController {
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<?> deleteSpectateur(@PathVariable Integer id) {
-        if(!spectateurRepository.existsById(id)) {
+    @DeleteMapping("/{idSpectateur}")
+    public ResponseEntity<?> deleteSpectateur(@PathVariable Integer idSpectateur) {
+        if(!spectateurRepository.existsById(idSpectateur)) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        spectateurRepository.deleteById(id);
+        spectateurRepository.deleteById(idSpectateur);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 

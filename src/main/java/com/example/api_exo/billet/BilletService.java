@@ -4,7 +4,6 @@ import com.example.api_exo.epreuve.Epreuve;
 import com.example.api_exo.epreuve.EpreuveRepository;
 import com.example.api_exo.spectateur.Spectateur;
 import jakarta.persistence.EntityNotFoundException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -12,11 +11,14 @@ import java.util.List;
 @Service
 public class BilletService {
 
-    @Autowired
-    private BilletRepository billetRepository;
+    private final BilletRepository billetRepository;
 
-    @Autowired
-    private EpreuveRepository epreuveRepository;
+    private final EpreuveRepository epreuveRepository;
+
+    public BilletService(BilletRepository billetRepository, EpreuveRepository epreuveRepository) {
+        this.billetRepository = billetRepository;
+        this.epreuveRepository = epreuveRepository;
+    }
 
     public Billet acheterBillet(Integer spectateurId, Integer epreuveId, int quantite) {
         // Récupération de l'épreuve pour laquelle le billet est acheté
@@ -47,4 +49,7 @@ public class BilletService {
         return (List<Billet>) billetRepository.findAll();
     }
 
+    public Billet getBilletById(Integer id ){
+        return billetRepository.findById(id).orElse(null);
+    }
 }
