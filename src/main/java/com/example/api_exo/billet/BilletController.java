@@ -13,9 +13,12 @@ public class BilletController {
 
     private final BilletService billetService;
 
+    private final BilletRepository billetRepository;
+
     @Autowired
-    public BilletController(BilletService billetService) {
+    public BilletController(BilletService billetService, BilletRepository billetRepository) {
         this.billetService = billetService;
+        this.billetRepository = billetRepository;
     }
 
     @GetMapping
@@ -39,6 +42,15 @@ public class BilletController {
                 billet.getEpreuve().getId(),
                 billet.getQuantite()
         );
+    }
+
+    @DeleteMapping("/{idBillet}")
+    public ResponseEntity<?> deleteBillet(@PathVariable Integer idBillet) {
+        if (!billetRepository.existsById(idBillet)) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        billetRepository.deleteById(idBillet);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
 }
