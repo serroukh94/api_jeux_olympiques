@@ -46,7 +46,6 @@ public class EpreuveController {
         if (epreuveToUpdate != null) {
             epreuveToUpdate.setNom(epreuveDetails.getNom());
             epreuveToUpdate.setDateHeure(epreuveDetails.getDateHeure());
-            epreuveToUpdate.setStade(epreuveDetails.getStade());
             epreuveRepository.save(epreuveToUpdate);
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }

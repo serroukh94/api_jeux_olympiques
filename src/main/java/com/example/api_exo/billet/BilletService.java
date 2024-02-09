@@ -1,6 +1,5 @@
 package com.example.api_exo.billet;
 
-import com.example.api_exo.billet.BilletRepository;
 import com.example.api_exo.epreuve.Epreuve;
 import com.example.api_exo.epreuve.EpreuveRepository;
 import com.example.api_exo.spectateur.Spectateur;
@@ -28,8 +27,8 @@ public class BilletService {
         List<Billet> billetsExistant = billetRepository.findBySpectateurId(spectateurId);
 
         for (Billet billet : billetsExistant) {
-            if (billet.getEpreuve().getDateHeure().toLocalDate().isEqual(((Epreuve) epreuve).getDateHeure().toLocalDate())) {
-                throw new IllegalStateException("Vous ne pouvez pas acheter de billet pour deux épreuves se déroulant le même jour.");
+            if (billet.getEpreuve().getDateHeure().isEqual(((Epreuve) epreuve).getDateHeure())) {
+                throw new IllegalStateException("Vous ne pouvez pas acheter de billet pour deux épreuves se déroulant à la même date.");
             }
         }
 
@@ -43,4 +42,9 @@ public class BilletService {
 
         return billetRepository.save(nouveauBillet);
     }
+
+    public List<Billet> findAllBillets() {
+        return (List<Billet>) billetRepository.findAll();
+    }
+
 }
