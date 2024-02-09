@@ -1,12 +1,14 @@
 package com.example.api_exo.stade;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import com.example.api_exo.billet.Billet;
+import com.example.api_exo.epreuve.Epreuve;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Positive;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class Stade {
@@ -23,6 +25,9 @@ public class Stade {
 
     @NotBlank
     private String adresse;
+
+    @OneToMany(mappedBy = "stade")
+    private List<Epreuve> epreuves = new ArrayList<>();
 
     public void setId(Integer id) {
         this.id = id;
@@ -54,5 +59,12 @@ public class Stade {
 
     public String getAdresse(){
         return adresse;
+    }
+
+    public void setEpreuves(List<Epreuve> epreuves) {
+        this.epreuves = epreuves;
+    }
+    public List<Epreuve> getEpreuves() {
+        return epreuves;
     }
 }

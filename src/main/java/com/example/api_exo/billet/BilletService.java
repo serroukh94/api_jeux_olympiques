@@ -15,7 +15,7 @@ public class BilletService {
         this.billetRepository = billetRepository;
     }
 
-    public Billet saveBillet(Billet billet) {
+    public Billet acheterBillet(Billet billet) {
         return billetRepository.save(billet);
     }
 
