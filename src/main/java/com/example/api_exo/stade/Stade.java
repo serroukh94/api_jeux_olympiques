@@ -1,14 +1,11 @@
 package com.example.api_exo.stade;
 
-import com.example.api_exo.billet.Billet;
 import com.example.api_exo.epreuve.Epreuve;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Positive;
 
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 public class Stade {
@@ -26,8 +23,8 @@ public class Stade {
     @NotBlank
     private String adresse;
 
-    @OneToMany(mappedBy = "stade")
-    private List<Epreuve> epreuves = new ArrayList<>();
+    @OneToOne
+    private Epreuve epreuve;
 
     public void setId(Integer id) {
         this.id = id;
@@ -61,10 +58,10 @@ public class Stade {
         return adresse;
     }
 
-    public void setEpreuves(List<Epreuve> epreuves) {
-        this.epreuves = epreuves;
+    public void setEpreuves(Epreuve epreuve) {
+        this.epreuve = epreuve;
     }
-    public List<Epreuve> getEpreuves() {
-        return epreuves;
+    public Epreuve getEpreuve() {
+        return epreuve;
     }
 }
