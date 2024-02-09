@@ -2,6 +2,7 @@ package com.example.api_exo.billet;
 
 import com.example.api_exo.epreuve.Epreuve;
 import com.example.api_exo.spectateur.Spectateur;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 @Entity
@@ -13,10 +14,12 @@ public class Billet {
 
     @ManyToOne
     @JoinColumn(name = "spectateur_id")
+    @JsonIgnore
     private Spectateur spectateur;
 
     @ManyToOne
     @JoinColumn(name = "epreuve_id")
+    @JsonIgnore
     private Epreuve epreuve;
 
     private int quantite;
