@@ -8,9 +8,7 @@ import java.util.List;
 @Repository
 public interface BilletRepository extends CrudRepository<Billet, Integer> {
 
-    // méthode personnalisée pour trouver des billets par l'ID du spectateur
     List<Billet> findBySpectateurId(Integer spectateurId);
 
-    // Exemple de méthode personnalisée pour trouver des billets par l'ID de l'épreuve
     List<Billet> findByEpreuveId(Integer epreuveId);
 }

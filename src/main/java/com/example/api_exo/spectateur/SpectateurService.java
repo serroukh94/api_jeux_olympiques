@@ -36,5 +36,4 @@ public class SpectateurService {
         return spectateurRepository.findAllByIdIn(ids);
     }
 
-    // Ajoutez d'autres méthodes selon les besoins de votre application
 }

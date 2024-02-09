@@ -10,5 +10,4 @@ public interface SpectateurRepository extends
 
     List<Spectateur> findAllByIdIn(List<Integer> ids);
 
-
 }

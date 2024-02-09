@@ -17,7 +17,7 @@ public class StadeService {
     }
 
     public List<Stade> findAllStades() {
-        return stadeRepository.findAll();
+        return (List<Stade>) stadeRepository.findAll();
     }
 
     public Optional<Stade> findStadeById(Integer id) {
