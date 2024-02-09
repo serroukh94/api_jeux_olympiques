@@ -19,7 +19,12 @@ public class BilletController {
 
     @PostMapping("/acheter")
     public Billet acheterBillet(@RequestBody Billet billet) {
-        return billetService.acheterBillet(billet);
+        return billetService.acheterBillet(
+                billet.getSpectateur().getId(),
+                billet.getEpreuve().getId(),
+                billet.getQuantite()
+        );
     }
+
 
 }

@@ -1,42 +1,46 @@
 package com.example.api_exo.billet;
 
+import com.example.api_exo.billet.BilletRepository;
+import com.example.api_exo.epreuve.Epreuve;
+import com.example.api_exo.epreuve.EpreuveRepository;
+import com.example.api_exo.spectateur.Spectateur;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class BilletService {
 
-    private final BilletRepository billetRepository;
+    @Autowired
+    private BilletRepository billetRepository;
 
     @Autowired
-    public BilletService(BilletRepository billetRepository) {
-        this.billetRepository = billetRepository;
-    }
+    private EpreuveRepository epreuveRepository;
 
-    public Billet acheterBillet(Billet billet) {
-        return billetRepository.save(billet);
-    }
+    public Billet acheterBillet(Integer spectateurId, Integer epreuveId, int quantite) {
+        // Récupération de l'épreuve pour laquelle le billet est acheté
+        Epreuve epreuve = epreuveRepository.findById(epreuveId)
+                .orElseThrow(() -> new EntityNotFoundException("Epreuve non trouvée avec l'ID : " + epreuveId));
 
-    public Optional<Billet> findBilletById(Integer id) {
-        return billetRepository.findById(id);
-    }
+        // Vérification si le spectateur a déjà des billets pour des épreuves à la même date
+        List<Billet> billetsExistant = billetRepository.findBySpectateurId(spectateurId);
 
-    public List<Billet> findAllBillets() {
-        return (List<Billet>) billetRepository.findAll();
-    }
+        for (Billet billet : billetsExistant) {
+            if (billet.getEpreuve().getDateHeure().toLocalDate().isEqual(((Epreuve) epreuve).getDateHeure().toLocalDate())) {
+                throw new IllegalStateException("Vous ne pouvez pas acheter de billet pour deux épreuves se déroulant le même jour.");
+            }
+        }
 
-    public List<Billet> findBilletsBySpectateurId(Integer spectateurId) {
-        return billetRepository.findBySpectateurId(spectateurId);
-    }
+        // Création et sauvegarde du nouveau billet
+        Billet nouveauBillet = new Billet();
+        nouveauBillet.setEpreuve(epreuve);
+        Spectateur spectateur = new Spectateur();
+        spectateur.setId(spectateurId);
+        nouveauBillet.setSpectateur(spectateur);
+        nouveauBillet.setQuantite(quantite);
 
-    public List<Billet> findBilletsByEpreuveId(Integer epreuveId) {
-        return billetRepository.findByEpreuveId(epreuveId);
+        return billetRepository.save(nouveauBillet);
     }
-
-    public void deleteBillet(Integer id) {
-        billetRepository.deleteById(id);
-    }
-
 }

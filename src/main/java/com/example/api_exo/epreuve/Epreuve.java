@@ -20,7 +20,6 @@ public class Epreuve {
 
     private LocalDateTime dateHeure;
 
-
     @OneToMany(mappedBy = "epreuve")
     private List<Billet> billets = new ArrayList<>();
 
